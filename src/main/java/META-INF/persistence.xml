@@ -2,8 +2,16 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
 
     <persistence-unit name="persistenceUnit">
-        <class>com.employee.management.EmployeeManagement.entity.Employees</class>
         <class>com.employee.management.EmployeeManagement.entity.Countries</class>
+        <class>com.employee.management.EmployeeManagement.entity.Departments</class>
+        <class>com.employee.management.EmployeeManagement.entity.Employees</class>
+        <class>com.employee.management.EmployeeManagement.entity.JobHistory</class>
+        <class>com.employee.management.EmployeeManagement.entity.Jobs</class>
+        <class>com.employee.management.EmployeeManagement.entity.Locations</class>
+        <class>com.employee.management.EmployeeManagement.entity.Managers</class>
+        <class>com.employee.management.EmployeeManagement.entity.Role</class>
+        <class>com.employee.management.EmployeeManagement.entity.Token</class>
+        <class>com.employee.management.EmployeeManagement.entity.Userroles</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/employee_management"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
