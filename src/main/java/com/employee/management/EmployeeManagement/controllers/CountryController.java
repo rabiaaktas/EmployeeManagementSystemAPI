@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class CountryController {
     @Autowired
-    CountryService countryService;
+    private CountryService countryService;
 
     @RequestMapping(value = "/allCountries", method = RequestMethod.GET)
     public ResponseEntity allCountries(){

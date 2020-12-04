@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface CountryRepository extends JpaRepository<Countries, Integer> {
-    Countries findBycountryID(int id);
+    Countries findByCountryID(int id);
     @Override
     List<Countries> findAll();
 }
