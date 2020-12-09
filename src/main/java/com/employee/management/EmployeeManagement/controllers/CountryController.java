@@ -24,17 +24,17 @@ public class CountryController {
     @RequestMapping(value = "/api/addCountry", method = RequestMethod.POST)
     public ResponseEntity addCountry(@RequestParam String name){
         try{
-            ResponseEntity a = countryService.addCountry(name);
-            if(a.getStatusCode() == HttpStatus.OK){
-                return new ResponseEntity("Created", HttpStatus.OK);
+            ResponseEntity serviceResponse = countryService.addCountry(name);
+            if(serviceResponse.getStatusCode() == HttpStatus.OK){
+                return serviceResponse;
             }
             else{
-                return new ResponseEntity("Duplicate country not created.", HttpStatus.CONFLICT);
+                return serviceResponse;
             }
 
         }
         catch (Exception e){
-            return new ResponseEntity("Not created", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST);
         }
     }
 }

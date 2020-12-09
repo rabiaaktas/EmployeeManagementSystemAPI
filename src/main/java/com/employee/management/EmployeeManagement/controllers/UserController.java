@@ -1,12 +1,16 @@
 package com.employee.management.EmployeeManagement.controllers;
 
+import com.employee.management.EmployeeManagement.entity.JobHistory;
 import com.employee.management.EmployeeManagement.entity.Userroles;
+import com.employee.management.EmployeeManagement.model.UserrolesDTO;
 import com.employee.management.EmployeeManagement.repository.UserrolesRepository;
 import com.employee.management.EmployeeManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -20,15 +24,26 @@ public class UserController {
     }
 
     @RequestMapping(value = "/api/addRoleToUser", method = RequestMethod.POST)
-    public ResponseEntity addRole(@RequestParam int employeeId, @RequestParam int roleId){
+    public ResponseEntity addRole(@RequestBody UserrolesDTO userrolesDTO){
         try{
-            ResponseEntity a = userService.addRoleToUser(employeeId, roleId);
-            if(a.getStatusCode() == HttpStatus.OK){
-                return new ResponseEntity("Created successfully", HttpStatus.OK);
+            ResponseEntity serviceResponse = userService.addRoleToUser(userrolesDTO.getEmployeeId(), userrolesDTO.getRoleId());
+            if(serviceResponse.getStatusCode() == HttpStatus.OK){
+                return serviceResponse;
             }
             else{
-                return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
+                return serviceResponse;
             }
+        }
+        catch (Exception e){
+            return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/api/jobHistory/{id}", method = RequestMethod.GET)
+    public ResponseEntity getHistory(@PathVariable int id){
+        try {
+            List<JobHistory> histories = userService.getHistoryOfUser(id);
+            return new ResponseEntity(histories, HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST);

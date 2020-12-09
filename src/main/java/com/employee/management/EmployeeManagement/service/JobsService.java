@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class JobsService {
 
@@ -15,5 +17,10 @@ public class JobsService {
     @Transactional(readOnly = true)
     public Jobs findByID(int id){
         return jobsRepository.findByjobId(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Jobs> allJobs(){
+        return jobsRepository.findAll();
     }
 }
