@@ -2,6 +2,7 @@ package com.employee.management.EmployeeManagement.controllers;
 
 import com.employee.management.EmployeeManagement.entity.JobHistory;
 import com.employee.management.EmployeeManagement.entity.Userroles;
+import com.employee.management.EmployeeManagement.model.UserJobInformationDTO;
 import com.employee.management.EmployeeManagement.model.UserrolesDTO;
 import com.employee.management.EmployeeManagement.repository.UserrolesRepository;
 import com.employee.management.EmployeeManagement.service.UserService;
@@ -19,8 +20,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/api/getRoleById/{id}", method = RequestMethod.GET)
-    public ResponseEntity getEmpRoleById(@PathVariable int id){
-        return new ResponseEntity(userService.getUserRoleByEmpId(id), HttpStatus.OK);
+    public Userroles getEmpRoleById(@PathVariable int id){
+        return userService.getUserRoleByEmpId(id);
     }
 
     @RequestMapping(value = "/api/addRoleToUser", method = RequestMethod.POST)
@@ -35,19 +36,20 @@ public class UserController {
             }
         }
         catch (Exception e){
-            return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(value = "/api/jobHistory/{id}", method = RequestMethod.GET)
-    public ResponseEntity getHistory(@PathVariable int id){
-        try {
+    public List<JobHistory> getHistory(@PathVariable int id){
             List<JobHistory> histories = userService.getHistoryOfUser(id);
-            return new ResponseEntity(histories, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST);
-        }
+            return histories;
+    }
+
+    @RequestMapping(value = "/api/employeeInformation/{id}", method = RequestMethod.GET)
+    public List<UserJobInformationDTO> employeeInfGet(@PathVariable int id){
+        List<UserJobInformationDTO> list = userService.getJobInfoEmployee(id);
+        return list;
     }
 
 

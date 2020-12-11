@@ -1,5 +1,6 @@
 package com.employee.management.EmployeeManagement.controllers;
 
+import com.employee.management.EmployeeManagement.entity.Countries;
 import com.employee.management.EmployeeManagement.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,9 @@ public class CountryController {
     private CountryService countryService;
 
     @RequestMapping(value = "/allCountries", method = RequestMethod.GET)
-    public ResponseEntity allCountries(){
-        return new ResponseEntity(countryService.findAll(), HttpStatus.OK);
+    public List<Countries> allCountries(){
+        List<Countries> countries = countryService.findAll();
+        return countries;
     }
 
     @RequestMapping(value = "/api/addCountry", method = RequestMethod.POST)
@@ -34,7 +36,7 @@ public class CountryController {
 
         }
         catch (Exception e){
-            return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 }

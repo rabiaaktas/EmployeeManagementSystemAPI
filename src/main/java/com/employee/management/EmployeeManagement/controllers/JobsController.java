@@ -24,13 +24,8 @@ public class JobsController {
     }
 
     @RequestMapping(value = "/api/allJobs", method = RequestMethod.GET)
-    public ResponseEntity allJobs(){
-        try {
+    public List<Jobs> allJobs(){
             List<Jobs> jobs = jobsService.allJobs();
-            return new ResponseEntity(jobs, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST);
-        }
+            return jobs;
     }
 }

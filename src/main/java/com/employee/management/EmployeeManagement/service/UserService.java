@@ -40,17 +40,18 @@ public class UserService {
             role.setRoleId(roleId);
             role.setEmployeeId(employeeId);
             userrolesRepository.save(role);
-            return new ResponseEntity(roleId, HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
         }
         else{
-            return new ResponseEntity("Already exists", HttpStatus.CONFLICT);
+            return new ResponseEntity(HttpStatus.CONFLICT);
         }
 
     }
 
     @Transactional
     public List<UserJobInformationDTO> getJobInfoEmployee(int id){
-        Query query = entityManager.createNativeQuery("").setParameter(1, id);
+        Query query = entityManager.createNativeQuery("SELECT e.employeeID, e.first_name, e.last_name, e.email_employee, e.phone_number, e.jobId, j.job_title, d.department_name, d.managerId\n" +
+                "FROM employees e, jobs j, departments d WHERE e.jobId = j.jobID AND e.departmentId = d.departmentID AND e.employeeID = ?1").setParameter(1, id);
         return query.getResultList();
     }
 
