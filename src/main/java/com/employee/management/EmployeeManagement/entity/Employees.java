@@ -10,8 +10,8 @@ public class Employees {
 
 
     private int employeeID;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String phone;
     private Date hireDate;
@@ -35,22 +35,22 @@ public class Employees {
 
     @Basic
     @Column(name = "first_name", nullable = false, length = 200)
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String first_name) {
+        this.firstName = first_name;
     }
 
     @Basic
     @Column(name = "last_name", nullable = false, length = 200)
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String last_name) {
+        this.lastName = last_name;
     }
 
     @Basic
@@ -150,8 +150,8 @@ public class Employees {
         if(o == null || getClass() != o.getClass()) return false;
         Employees employees = (Employees) o;
         return employeeID == employees.employeeID &&
-                Objects.equals(first_name, employees.first_name) &&
-                Objects.equals(last_name, employees.last_name) &&
+                Objects.equals(firstName, employees.firstName) &&
+                Objects.equals(lastName, employees.lastName) &&
                 Objects.equals(email, employees.email) &&
                 Objects.equals(phone, employees.phone) &&
                 Objects.equals(hireDate, employees.hireDate) &&
@@ -166,7 +166,7 @@ public class Employees {
 
     @Override
     public int hashCode(){
-        return Objects.hash(employeeID, first_name, last_name, email, phone, hireDate, jobId, salary, managerId, departmentId,
+        return Objects.hash(employeeID, firstName, lastName, email, phone, hireDate, jobId, salary, managerId, departmentId,
                 isActive, password);
     }
 }

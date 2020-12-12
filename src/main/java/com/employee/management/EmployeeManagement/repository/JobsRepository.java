@@ -12,4 +12,5 @@ public interface JobsRepository extends JpaRepository<Jobs, Integer> {
     Jobs findByjobIdAndJobName(int id, String name);
     Jobs findByJobName(String name);
     List<Jobs> findAll();
+    boolean existsByJobName(String jobName);
 }

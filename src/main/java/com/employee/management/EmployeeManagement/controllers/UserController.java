@@ -46,11 +46,13 @@ public class UserController {
             return histories;
     }
 
-    @RequestMapping(value = "/api/employeeInformation/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/employeeJobInformation/{id}", method = RequestMethod.GET)
     public List<UserJobInformationDTO> employeeInfGet(@PathVariable int id){
         List<UserJobInformationDTO> list = userService.getJobInfoEmployee(id);
         return list;
     }
+
+
 
 
 }
