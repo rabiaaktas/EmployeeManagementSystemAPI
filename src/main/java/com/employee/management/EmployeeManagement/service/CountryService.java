@@ -18,9 +18,6 @@ public class CountryService {
     @Autowired
     private CountryRepository countryRepository;
 
-    @Autowired
-    private EntityManager entityManager;
-
     @Transactional(readOnly = true)
     public List<Countries> findAll(){
         return countryRepository.findAll();
@@ -42,15 +39,26 @@ public class CountryService {
     }
 
     @Transactional
-    public List<Departments> getDepartmentsByLocation(String city, String streetAddress, String countryName){
-        Query location = entityManager.createNativeQuery("SELECT d.* " +
-                "FROM departments d, locations l, countries c " +
-                "WHERE d.locationId = l.locationID AND l.countryId = c.countryID AND " +
-                "(l.city LIKE ?1 OR l.street_address LIKE ?2 OR c.countryName LIKE ?3)")
-                .setParameter(1, "%" + city + "%")
-                .setParameter(2, "%" + streetAddress + "%")
-                .setParameter(3, "%"+ countryName + "%");
-        return location.getResultList();
+    public ResponseEntity deleteCountry(int id){
+        Countries countries = countryRepository.findByCountryID(id);
+        boolean exist = countryRepository.existsByCountryName(countries.getCountryName());
+        if(exist){
+            countryRepository.delete(countries);
+        }
+        else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
+
+    @Transactional
+    public ResponseEntity update(Countries countries){
+        Countries country = countryRepository.findByCountryID(countries.getCountryID());
+        country.setCountryName(countries.getCountryName());
+        countryRepository.save(country);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
 
 }

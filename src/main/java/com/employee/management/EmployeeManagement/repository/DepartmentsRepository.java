@@ -11,4 +11,5 @@ public interface DepartmentsRepository extends JpaRepository<Departments, Intege
     Departments findBydepartmentId(int id);
     Departments findBydepartmentName(String name);
     List<Departments> findAll();
+    boolean existsBydepartmentName(String name);
 }

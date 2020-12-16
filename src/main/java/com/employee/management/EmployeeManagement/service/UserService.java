@@ -4,6 +4,7 @@ import com.employee.management.EmployeeManagement.entity.JobHistory;
 import com.employee.management.EmployeeManagement.entity.Userroles;
 import com.employee.management.EmployeeManagement.model.UserJobInformationDTO;
 import com.employee.management.EmployeeManagement.repository.JobsHistoryRepository;
+import com.employee.management.EmployeeManagement.repository.RoleRepository;
 import com.employee.management.EmployeeManagement.repository.UserrolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class UserService {
     private UserrolesRepository userrolesRepository;
 
     @Autowired
-    private JobsHistoryRepository jobsHistoryRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     private EntityManager entityManager;
@@ -49,14 +50,8 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserJobInformationDTO> getJobInfoEmployee(int id){
-        Query query = entityManager.createNativeQuery("SELECT e.employeeID, e.first_name, e.last_name, e.email_employee, e.phone_number, e.jobId, j.job_title, d.department_name, d.managerId\n" +
-                "FROM employees e, jobs j, departments d WHERE e.jobId = j.jobID AND e.departmentId = d.departmentID AND e.employeeID = ?1").setParameter(1, id);
-        return query.getResultList();
+    public String userRoleName(Userroles userroles){
+        return roleRepository.findByroleId(userroles.getRoleId()).getRoleName();
     }
 
-    @Transactional(readOnly = true)
-    public List<JobHistory> getHistoryOfUser(int id){
-        return jobsHistoryRepository.findByemployeeId(id);
-    }
 }

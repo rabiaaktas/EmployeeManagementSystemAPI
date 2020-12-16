@@ -3,6 +3,7 @@ package com.employee.management.EmployeeManagement.service;
 import com.employee.management.EmployeeManagement.entity.Jobs;
 import com.employee.management.EmployeeManagement.entity.JobsDepartment;
 import com.employee.management.EmployeeManagement.model.AddJobDTO;
+import com.employee.management.EmployeeManagement.model.UserJobInformationDTO;
 import com.employee.management.EmployeeManagement.repository.JobsDepartmentRepository;
 import com.employee.management.EmployeeManagement.repository.JobsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 @Service
@@ -21,6 +24,9 @@ public class JobsService {
 
     @Autowired
     private JobsDepartmentRepository jobsDepartmentRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Transactional(readOnly = true)
     public Jobs findByID(int id){
@@ -51,5 +57,12 @@ public class JobsService {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Transactional
+    public List<UserJobInformationDTO> getJobInfoEmployee(int id){
+        Query query = entityManager.createNativeQuery("SELECT e.employeeID, e.first_name, e.last_name, e.email_employee, e.phone_number, e.jobId, j.job_title, d.department_name, d.managerId\n" +
+                "FROM employees e, jobs j, departments d WHERE e.jobId = j.jobID AND e.departmentId = d.departmentID AND e.employeeID = ?1").setParameter(1, id);
+        return query.getResultList();
     }
 }
